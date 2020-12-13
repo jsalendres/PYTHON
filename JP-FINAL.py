@@ -28,19 +28,43 @@ def covid_casos(ciudad):
             if ciudad in ciudades and not ciudad== 'CIUDAD DE MÉXICO':
                     casos = df.loc[(df['Municipality'])==ciudad, 'Active'].sum()
                     print("The number of active cases in", ciudad, "is:", casos)
+                    if casos >= 500:
+                        print('RED ALERT: Please avoid traveling to this area')
+                    elif casos >= 200 and casos <= 499:
+                        print('YELLOW ALERT: Please be careful while traveling in this area')
+                    elif casos <=199:
+                        print('GREEN ALERT: Safe to travel in this area, enjoy the visit!')
                     break
             elif ciudad == 'CIUDAD DE MÉXICO':
                     casos1 = df.loc[(df['State'])==ciudad, 'Active'].sum()
                     print("The number of active cases in", ciudad, "is:", casos1)
+                    if casos1 >= 500:
+                        print('RED ALERT: Please avoid traveling to this area')
+                    elif casos1 >= 200 and casos <= 499:
+                        print('YELLOW ALERT: Please be careful while traveling in this area')
+                    elif casos1 <=199:
+                        print('GREEN ALERT: Safe to travel in this area, enjoy the visit!')
                     break
             
     else: 
                 if ciudad in ciudades and not ciudad== 'CIUDAD DE MÉXICO':
                     casos = df.loc[(df['Municipality'])==ciudad, 'Active'].sum()
                     print("The number of active cases in", ciudad, "is:", casos)
+                    if casos >= 500:
+                        print('RED ALERT: Please avoid traveling to this area')
+                    elif casos >= 200 and casos <= 499:
+                        print('YELLOW ALERT: Please be careful while traveling in this area')
+                    elif casos <=199:
+                        print('GREEN ALERT: Safe to travel in this area, enjoy the visit!')
                 elif ciudad == 'CIUDAD DE MÉXICO':
                     casos1 = df.loc[(df['State'])==ciudad, 'Active'].sum()
                     print("The number of active cases in", ciudad, "is:", casos1)
+                    if casos1 >= 500:
+                        print('RED ALERT: Please avoid traveling to this area')
+                    elif casos1 >= 200 and casos <= 499:
+                        print('YELLOW ALERT: Please be careful while traveling in this area')
+                    elif casos1 <=199:
+                        print('GREEN ALERT: Safe to travel in this area, enjoy the visit!')
 
   
  
@@ -72,7 +96,7 @@ def inseg_casos(ciudad,delito):
                 print("The number of cases of",delito,"in",ciudad,"is",suma1)
         else:
             if ciudad in ciudades_seg and delito in delitos and not ciudad == "Ciudad de México":
-                municipios = pd.DataFrame(df_seg.loc[(df_seg['Entidad']== ciudad) & (df_seg['Subtipo de delito']== delito) & (df_seg['Año']>=2019)]).fillna(0)
+                municipios = pd.DataFrame(df_seg.loc[(df_seg['Municipio']== ciudad) & (df_seg['Subtipo de delito']== delito) & (df_seg['Año']>=2019)]).fillna(0)
                 suma = municipios.iloc[:,9:21].sum().sum().astype(int)
                 print("The number of cases of",delito,"in",ciudad,"is",suma)
             elif ciudad == "Ciudad de México":
@@ -109,13 +133,12 @@ ciudades = ['MÉRIDA', 'PUERTO VALLARTA', 'CANCÚN', 'GUANAJUATO', 'LOS CABOS', 
 
 print("Top 15 destinations in Mexico:")
 
-print(ciudades)
+print(*ciudades, sep = "\n")
     
 do_run = ''
 
 while do_run != 'n':
     ciudad = input("Please choose your destination: ")
-    print(ciudad)
     covid_casos(ciudad)
     do_run = input('Would you like to try another city for covid statistics? If no, then we will move on to crime statitics. PLEASE ENTER (y/n)')
     if do_run == 'n':
@@ -128,19 +151,20 @@ print("Top 15 destinations in Mexico:")
 
 ciudades_seg = ['Mérida', 'Puerto Vallarta', 'Cancún', 'Guanajuato', 'Los Cabos', 'Acapulco de Juárez', 'San Miguel De Allende', 'Chapala', 'Puerto Escondido', 'Tijuana', 'Mazatlán', 'Puerto Peñasco', 'Puebla', 'Oaxaca de Juárez']
 
-print(ciudades_seg)
+print(*ciudades_seg, sep = "\n")
 
 do_run1 = ''
 while do_run1 != 'n':
     ciudad = input("Please enter destination: ")
     print("List of crimes:")
     delito = ['Homicidio doloso', 'Secuestro', 'Robo a casa habitación', 'Robo a transeúnte en vía pública', 'Feminicidio', 'Violación simple', 'Acoso sexual']
-    print(delito)
+    a = ["For HOMICIDE type: Homicidio doloso","For KIDNAPPING type: Secuestro", "For HOUSE BURGLARY type: Robo a casa habitación", "For PICKPOCKETING type: Robo a transeúnte en vía pública", "For FEMINICIDE type: Feminicidio", "For RAPE type: Violación simple", "For SEXUAL HARRASSMENT type: Acoso sexual"]
+    print(*a, sep = "\n") 
     delito = input("Plese enter specific crime: ")
     inseg_casos(ciudad, delito)
-    do_run1 = input('Would you like to try another city for covid statistics? If no, then we will move on to crime statitics. PLEASE ENTER (y/n)')
+    do_run1 = input('Would you like to try another city for crime statistics? If no, then PLEASE ENTER (y/n)')
     if do_run1 == 'n':
-        print("Thank you for suing the Mexicome app. Wishing you healthy and safe holidays in Mexico!") 
+        print("Thank you for using the Mexicome app. Wishing you healthy and safe holidays in Mexico!") 
         break
         
 
