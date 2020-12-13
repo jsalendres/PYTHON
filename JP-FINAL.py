@@ -41,20 +41,23 @@ def covid_casos(ciudad):
                 elif ciudad == 'CIUDAD DE MÉXICO':
                     casos1 = df.loc[(df['State'])==ciudad, 'Active'].sum()
                     print("The number of active cases in", ciudad, "is:", casos1)
-                    
+
+  
+ 
               
         
 #%% info inseguridad
+
 
 csv_seg = '/Users/jeanpierresalendres/Downloads/IDM_NM_oct2020.csv'
 
 df_seg = pd.read_csv(csv_seg, encoding='latin-1')
   
 def inseg_casos(ciudad,delito):
-    ciudades_seg = ['Mérida', 'Puerto Vallarta', 'Cancún', 'Guanajuato', "Ciudad de México", 'Los Cabos', 'Acapulco de Juárez', 'San Miguel De Allende', 'Chapala', 'Puerto Escondido', 'Tijuana', 'Mazatlán', 'Puerto Peñasco', 'Puebla', 'Oaxaca de Juárez']
-    delitos = ['Homicidio doloso', 'Secuestro', 'Robo a casa habitación', 'Robo a transeúnte en vía pública', 'Feminicidio', 'Violación simple', 'Acoso sexual']   
+        ciudades_seg = ['Mérida', 'Puerto Vallarta', 'Cancún', 'Guanajuato', "Ciudad de México", 'Los Cabos', 'Acapulco de Juárez', 'San Miguel De Allende', 'Chapala', 'Puerto Escondido', 'Tijuana', 'Mazatlán', 'Puerto Peñasco', 'Puebla', 'Oaxaca de Juárez']
+        delitos = ['Homicidio doloso', 'Secuestro', 'Robo a casa habitación', 'Robo a transeúnte en vía pública', 'Feminicidio', 'Violación simple', 'Acoso sexual']   
 
-    while ciudad not in ciudades_seg or delito not in delitos:
+        while ciudad not in ciudades_seg or delito not in delitos:
             print("Please enter the correct city spelling and the correct crime") 
             ciudad = input("Please choose your destination: ")
             delito = input("Plese enter specific crime: ")
@@ -67,7 +70,7 @@ def inseg_casos(ciudad,delito):
                 cdmx = pd.DataFrame(df_seg.loc[(df_seg['Entidad']== 'Ciudad de México') & (df_seg['Subtipo de delito']== delito) & (df_seg['Año']>=2019)]).fillna(0)
                 suma1 = cdmx.iloc[:,9:21].sum().sum().astype(int)
                 print("The number of cases of",delito,"in",ciudad,"is",suma1)
-    else:
+        else:
             if ciudad in ciudades_seg and delito in delitos and not ciudad == "Ciudad de México":
                 municipios = pd.DataFrame(df_seg.loc[(df_seg['Entidad']== ciudad) & (df_seg['Subtipo de delito']== delito) & (df_seg['Año']>=2019)]).fillna(0)
                 suma = municipios.iloc[:,9:21].sum().sum().astype(int)
@@ -77,14 +80,8 @@ def inseg_casos(ciudad,delito):
                 suma1 = cdmx.iloc[:,9:21].sum().sum().astype(int)
                 print("The number of cases of",delito,"in",ciudad,"is",suma1)
                 
-def script():
-#programcode here    
-    restart = input("Would you like to restart this program? (y")
-    if restart == "yes" or restart == "y":
-        script()
-    if restart == "n" or restart == "no":
-            print("Script terminating. Until next time and Happy Holidays in Mexico!")
-script()
+
+
 
         
        
@@ -92,7 +89,6 @@ script()
         
         
 #%% Code lines to check for spreadsheet summary statistics
-
 
 df_seg.columns
 
@@ -114,12 +110,17 @@ ciudades = ['MÉRIDA', 'PUERTO VALLARTA', 'CANCÚN', 'GUANAJUATO', 'LOS CABOS', 
 print("Top 15 destinations in Mexico:")
 
 print(ciudades)
+    
+do_run = ''
 
-ciudad = input("Please choose your destination: ")
-
-print(ciudad)
-
-covid_casos(ciudad)
+while do_run != 'n':
+    ciudad = input("Please choose your destination: ")
+    print(ciudad)
+    covid_casos(ciudad)
+    do_run = input('Would you like to try another city for covid statistics? If no, then we will move on to crime statitics. PLEASE ENTER (y/n)')
+    if do_run == 'n':
+        print("Ok let's move on to crime statistics in your preferred city") 
+        break
 
 input("Press enter to continue for criminality information: ")
 
@@ -129,18 +130,20 @@ ciudades_seg = ['Mérida', 'Puerto Vallarta', 'Cancún', 'Guanajuato', 'Los Cabo
 
 print(ciudades_seg)
 
-ciudad = input("Please enter destination: ")
+do_run1 = ''
+while do_run1 != 'n':
+    ciudad = input("Please enter destination: ")
+    print("List of crimes:")
+    delito = ['Homicidio doloso', 'Secuestro', 'Robo a casa habitación', 'Robo a transeúnte en vía pública', 'Feminicidio', 'Violación simple', 'Acoso sexual']
+    print(delito)
+    delito = input("Plese enter specific crime: ")
+    inseg_casos(ciudad, delito)
+    do_run1 = input('Would you like to try another city for covid statistics? If no, then we will move on to crime statitics. PLEASE ENTER (y/n)')
+    if do_run1 == 'n':
+        print("Thank you for suing the Mexicome app. Wishing you healthy and safe holidays in Mexico!") 
+        break
+        
 
-print("List of crimes:")
-
-delito = ['Homicidio doloso', 'Secuestro', 'Robo a casa habitación', 'Robo a transeúnte en vía pública', 'Feminicidio', 'Violación simple', 'Acoso sexual']
-
-print(delito)
-
-
-delito = input("Plese enter specific crime: ")
-
-inseg_casos(ciudad, delito)
 
 
 #%%
